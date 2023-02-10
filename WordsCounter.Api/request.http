@@ -1,0 +1,7 @@
+POST http://localhost:5125/Api/Paragraph HTTP/1.1
+Content-Type: application/json
+Accept: application/json
+
+{
+    "paragraph": "test"
+}
