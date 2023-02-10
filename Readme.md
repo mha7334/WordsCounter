@@ -1,15 +1,17 @@
 Database Table Creation
 -------------
 
+```
 CREATE TABLE Watchlist (
 	id INT NOT NULL IDENTITY PRIMARY KEY,
     Word VARCHAR(50) UNIQUE  NOT NULL,
 );
-
+```
 
 Clean Architecture solution and projects creation
 ------------------
 
+```
 dotnet new sln -o WordsCounter 
 
 cd WordsCounter
@@ -26,3 +28,5 @@ dotnet add .\WordsCounter.Api\ reference .\WordsCounter.Contracts\ .\WordsCounte
 dotnet add .\WordsCounter.Infrastructure\ reference .\WordsCounter.Application\
 dotnet add .\WordsCounter.Application\ reference .\WordsCounter.Domain\ 
 dotnet add .\WordsCounter.Application\ reference .\WordsCounter.Infrastructure\
+
+```
