@@ -12,18 +12,24 @@ public class WordsCounterService : IWordsCounterService
 
     public (int, IEnumerable<string>) CountWords(string paragraph)
     {
-        var wordSet = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+
         var words = paragraph.Split(new[] { ' ', '.', ',', ';', ':', '!', '?' },
                                     StringSplitOptions.RemoveEmptyEntries);
 
-        var watchlist = _watchlistRepository.GetWords().Select(w => w.Word).ToList();
+        var watchList = _watchlistRepository.GetWords().Select(w => w.Word).ToList();
+
+        var uniqueWords = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        var uniqueWordsInWatchlist = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
         Parallel.ForEach(words, word =>
         {
-            if (watchlist.Contains(word, StringComparer.OrdinalIgnoreCase))
-                wordSet.Add(word);
+            uniqueWords.Add(word);
+            if (watchList.Contains(word, StringComparer.OrdinalIgnoreCase))
+            {
+                uniqueWordsInWatchlist.Add(word);
+            }
         });
 
-        return (words.Count(), wordSet.AsEnumerable());
+        return (uniqueWords.Count, uniqueWordsInWatchlist.AsEnumerable());
     }
 }
