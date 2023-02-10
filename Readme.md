@@ -1,6 +1,4 @@
-Database Table Creation
--------------
-
+Follwing DB Table is required to be created
 ```
 CREATE TABLE Watchlist (
 	id INT NOT NULL IDENTITY PRIMARY KEY,
@@ -8,9 +6,14 @@ CREATE TABLE Watchlist (
 );
 ```
 
-Clean Architecture solution and projects creation
-------------------
+Apart from this, the connectionString in appsettings.json file need to adjusted. 
+```
+"ConnectionStrings": {
+    "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database=wordscounter;Trusted_Connection=True;MultipleActiveResultSets=true"
+  }
+```
 
+Clean Architecture solution and projects creation
 ```
 dotnet new sln -o WordsCounter 
 
