@@ -28,8 +28,8 @@ Apart from this, the connectionString in appsettings.json file need to adjusted.
 ```
 
 Example:
-![image](https://user-images.githubusercontent.com/4058181/218311597-a7d1daed-a554-49fb-8331-1ac1b2437d42.png)
-![image](https://user-images.githubusercontent.com/4058181/218311631-276852ef-08a9-4462-95ec-55160c203ea6.png)
+
+![image](https://user-images.githubusercontent.com/4058181/218311700-f39c4f63-7fcc-491e-9af2-5d80fa657934.png)
 
 
 
