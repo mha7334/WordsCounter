@@ -2,8 +2,8 @@
 
 namespace WordsCounter.Application.Interfaces
 {
-    public interface IWatchlistRepository
+    public interface IWatchlistRepository1
     {
-        IQueryable<WatchlistWord> GetWords();
+        IQueryable<Watchlist> GetWords();
     }
 }

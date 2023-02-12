@@ -1,5 +1,5 @@
-
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
 using WordsCounter.Contracts;
 
@@ -16,11 +16,10 @@ public class WordsCounterController : ControllerBase
 
     [Route("Paragraph")]
     [HttpPost]
-    [DisableRequestSizeLimit]
     public IActionResult WordCounter([Required][FromBody] WordsCounterRequest wordsCounterRequest)
     {
 
-        var result = _wordsCounterService.CountWords(wordsCounterRequest.Paragraph);
+        var result = _wordsCounterService.CountWords(wordsCounterRequest.Paragraph).Result;
 
         WordsCounterResponse response = new(result.Item1, result.Item2);
 
