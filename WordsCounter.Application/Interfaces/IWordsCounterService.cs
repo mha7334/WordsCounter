@@ -1,4 +1,4 @@
 public interface IWordsCounterService
 {
-    Task<(int, IEnumerable<string>)> CountWords(string paragraph);
+    Task<(int Counts, IEnumerable<string> WordsInWatchlist)> CountWords(string paragraph);
 }

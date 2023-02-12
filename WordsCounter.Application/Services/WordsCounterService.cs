@@ -24,33 +24,33 @@ public class WordsCounterService : IWordsCounterService
         var words = paragraph.Split(new[] { ' ', '.', ',', ';', ':', '!', '?' },
                                     StringSplitOptions.RemoveEmptyEntries);
 
-        var watchList = _watchlistRepository.GetAllAsync().Result.ToList();
+        var watchList = await _watchlistRepository.GetAllAsync();
         var watchListWords = watchList.Select(w => w.Word).ToList();
 
-        var uniqueWords = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-        var uniqueWordsInWatchlist = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        var uniqueWordsTemp = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        var uniqueWordsInWatchlistTemp = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
         Parallel.ForEach(words, word =>
         {
-            uniqueWords.Add(word);
+            uniqueWordsTemp.Add(word);
             if (watchListWords.Contains(word, StringComparer.OrdinalIgnoreCase))
             {
-                uniqueWordsInWatchlist.Add(word);
+                uniqueWordsInWatchlistTemp.Add(word);
             }
         });
 
-        Stats stats = new(default, uniqueWords.Count);
+        Stats stats = new(default, uniqueWordsTemp.Count);
 
         var result = await _statsRepository.AddAsync(stats);
 
         List<StatsWatchlist> statsWatchlist = new();
-        foreach (var word in uniqueWordsInWatchlist)
+        foreach (var word in uniqueWordsInWatchlistTemp)
         {
             int wordId = watchList.First(w => w.Word.Equals(word)).Id;
             await _statsWatchlistRepository.AddAsync(new StatsWatchlist(result.Id, wordId));
             statsWatchlist.Add(new StatsWatchlist(result.Id, wordId));
         }
 
-        return (uniqueWords.Count, uniqueWordsInWatchlist.AsEnumerable());
+        return (uniqueWordsTemp.Count, uniqueWordsInWatchlistTemp.AsEnumerable());
     }
 }

@@ -16,12 +16,12 @@ public class WordsCounterController : ControllerBase
 
     [Route("Paragraph")]
     [HttpPost]
-    public IActionResult WordCounter([Required][FromBody] WordsCounterRequest wordsCounterRequest)
+    public async Task<IActionResult> WordCounter([Required][FromBody] WordsCounterRequest wordsCounterRequest)
     {
 
-        var result = _wordsCounterService.CountWords(wordsCounterRequest.Paragraph).Result;
+        var result = await _wordsCounterService.CountWords(wordsCounterRequest.Paragraph);
 
-        WordsCounterResponse response = new(result.Item1, result.Item2);
+        WordsCounterResponse response = new(result.Counts, result.WordsInWatchlist);
 
         return Ok(response);
     }
