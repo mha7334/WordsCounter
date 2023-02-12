@@ -1,9 +1,23 @@
-Follwing DB Table is required to be created
+Follwing DB Tables
 ```
 CREATE TABLE Watchlist (
 	id INT NOT NULL IDENTITY PRIMARY KEY,
     Word VARCHAR(50) UNIQUE  NOT NULL,
 );
+
+CREATE TABLE Stats (
+    Id BIGINT NOT NULL IDENTITY PRIMARY KEY,
+    WordCount BIGINT
+);
+
+CREATE TABLE StatsWatchlist (
+    StatsId BIGINT,
+    WatchlistId SMALLINT,
+    PRIMARY KEY (StatsId, WatchlistId),
+    FOREIGN KEY (StatsId) REFERENCES Stats(Id),
+    FOREIGN KEY (WatchlistId) REFERENCES Watchlist(id)
+);
+
 ```
 
 Apart from this, the connectionString in appsettings.json file need to adjusted. 
