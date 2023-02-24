@@ -39,17 +39,32 @@ dotnet new sln -o WordsCounter
 
 cd WordsCounter
 
-dotnet new webapi -o WordsCounter.Api
-dotnet new classlib -o WordsCounter.Contracts
-dotnet new classlib -o WordsCounter.Infrastructure
-dotnet new classlib -o WordsCounter.Application
-dotnet new classlib -o WordsCounter.Domain
+mkdir src
+mkdir tests
 
-dotnet sln add (ls -r **\*.csproj)
+dotnet new webapi -o src\WordsCounter.Api
+dotnet new classlib -o src\WordsCounter.Contracts
+dotnet new classlib -o src\WordsCounter.Infrastructure
+dotnet new classlib -o src\WordsCounter.Application
+dotnet new classlib -o src\WordsCounter.Domain
 
-dotnet add .\WordsCounter.Api\ reference .\WordsCounter.Contracts\ .\WordsCounter.Application\
-dotnet add .\WordsCounter.Infrastructure\ reference .\WordsCounter.Application\
-dotnet add .\WordsCounter.Application\ reference .\WordsCounter.Domain\ 
-dotnet add .\WordsCounter.Application\ reference .\WordsCounter.Infrastructure\
+dotnet sln WordCounter.sln add (ls src/**/*.csproj)
+
+dotnet add .\src\WordsCounter.Api\ reference .\src\WordsCounter.Application\ .\src\WordsCounter.Contracts\
+dotnet add .\src\WordsCounter.Infrastructure\ reference .\src\WordsCounter.Application\
+dotnet add .\src\WordsCounter.Application\ reference .\src\WordsCounter.Domain\ 
+dotnet add .\src\WordsCounter.Application\ reference .\src\WordsCounter.Infrastructure\
+
+dotnet new xunit -o .\tests\Infrastructure.Tests
+dotnet new xunit -o .\tests\Application.Tests
+dotnet new xunit -o .\tests\Doamin.Tests
+
+dotnet sln WordCounter.sln add (ls tests/**/*.csproj)
+
+dotnet add .\tests\Application.Tests\ reference .\src\WordsCounter.Application\
+dotnet add .\tests\Domain.Tests\ reference .\src\WordsCounter.Domain\
+dotnet add .\tests\Infrastructure.Tests\ reference .\src\WordsCounter.Infrastructure\
+
+
 
 ```
